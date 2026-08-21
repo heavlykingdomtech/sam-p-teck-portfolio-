@@ -1289,6 +1289,66 @@ body::before {
   cursor: default;
 }
 
+/* =========================================================
+   FEATURED DATA ANALYTICS COURSE
+========================================================= */
+
+.featured-course {
+  position: relative;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(77, 141, 255, 0.12),
+      rgba(255, 255, 255, 0.02)
+    );
+
+  border-color: rgba(77, 141, 255, 0.25);
+}
+
+
+.featured-course::before {
+  content: "FEATURED";
+
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  padding: 6px 9px;
+
+  border: 1px solid rgba(77, 141, 255, 0.35);
+
+  color: var(--blue-light);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+.featured-course:hover {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(77, 141, 255, 0.18),
+      rgba(255, 255, 255, 0.04)
+    );
+
+  border-color: rgba(77, 141, 255, 0.45);
+}
+
+
+.featured-course .course-number {
+  color: var(--blue-light);
+}
+
+
+.featured-course h3 {
+  max-width: 280px;
+}
 
 /* =========================================================
    15. FOUNDER

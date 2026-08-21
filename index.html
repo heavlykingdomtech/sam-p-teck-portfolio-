@@ -1531,7 +1531,1081 @@
 
             });
           
-          <script src="./script.js" defer></script>
+          <script>
+"use strict";
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* =========================================================
+     SAM. P TECK — PREMIUM PORTFOLIO EXPERIENCE
+  ========================================================= */
+
+
+  /* =========================================================
+     01. ELEMENTS
+  ========================================================= */
+
+  const body = document.body;
+
+  const header =
+    document.querySelector(".site-header");
+
+  const navigationLinks =
+    document.querySelectorAll(".desktop-nav a");
+
+  const sections =
+    document.querySelectorAll("main section[id]");
+
+  const revealElements =
+    document.querySelectorAll(
+      ".service-item, .work-feature, .work-side, .course-card, .image-frame"
+    );
+
+  const disabledLinks =
+    document.querySelectorAll(".course-link.disabled");
+
+  const images =
+    document.querySelectorAll("img");
+
+
+  /* =========================================================
+     02. INJECT JAVASCRIPT EFFECT STYLES
+     
+     This means you don't have to keep editing CSS
+     whenever we add these effects.
+  ========================================================= */
+
+  const effectStyles = document.createElement("style");
+
+  effectStyles.textContent = `
+
+    /* SCROLL PROGRESS */
+
+    .js-scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--blue, #4d8dff);
+      z-index: 99999;
+      box-shadow: 0 0 14px rgba(77,141,255,.45);
+      pointer-events: none;
+    }
+
+
+    /* HEADER */
+
+    .site-header.js-scrolled {
+      background: rgba(5, 15, 35, .94);
+      box-shadow: 0 12px 40px rgba(0,0,0,.20);
+    }
+
+
+    /* BACK TO TOP */
+
+    .js-back-top {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+
+      width: 48px;
+      height: 48px;
+
+      border: 1px solid rgba(255,255,255,.14);
+
+      background: rgba(7,21,47,.92);
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 20px;
+
+      cursor: pointer;
+
+      z-index: 9990;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transform: translateY(15px);
+
+      transition:
+        opacity .3s ease,
+        visibility .3s ease,
+        transform .3s ease,
+        background .3s ease;
+    }
+
+
+    .js-back-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+
+    .js-back-top:hover {
+      background: var(--blue, #4d8dff);
+      transform: translateY(-4px);
+    }
+
+
+    /* LOADER */
+
+    .js-page-loader {
+      position: fixed;
+      inset: 0;
+
+      background: #07152f;
+
+      z-index: 100000;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transition:
+        opacity .7s ease,
+        visibility .7s ease;
+    }
+
+
+    .js-page-loader.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+
+    .js-loader-content {
+      text-align: center;
+    }
+
+
+    .js-loader-brand {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+
+    .js-loader-brand span {
+      color: var(--blue, #4d8dff);
+    }
+
+
+    .js-loader-line {
+      width: 120px;
+      height: 1px;
+
+      margin: 18px auto;
+
+      background: var(--blue, #4d8dff);
+
+      animation: jsLoaderPulse 1.2s ease-in-out infinite;
+    }
+
+
+    .js-loader-text {
+      color: #9aa8c2;
+
+      font-size: 9px;
+      letter-spacing: 3px;
+    }
+
+
+    @keyframes jsLoaderPulse {
+
+      0% {
+        transform: scaleX(.2);
+        opacity: .3;
+      }
+
+      50% {
+        transform: scaleX(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scaleX(.2);
+        opacity: .3;
+      }
+
+    }
+
+
+    /* FEATURED COURSE */
+
+    .js-featured-course {
+      position: relative;
+      border-top: 2px solid var(--blue, #4d8dff);
+    }
+
+
+    .js-featured-badge {
+      display: inline-block;
+
+      width: fit-content;
+
+      padding: 6px 9px;
+
+      margin-bottom: 8px;
+
+      border: 1px solid rgba(77,141,255,.30);
+
+      background: rgba(77,141,255,.10);
+
+      color: var(--blue-light, #79aaff);
+
+      font-size: 9px;
+      font-weight: 700;
+
+      letter-spacing: 1.5px;
+    }
+
+
+    /* CUSTOM CURSOR */
+
+    .js-cursor,
+    .js-cursor-dot {
+      position: fixed;
+
+      pointer-events: none;
+
+      z-index: 100001;
+
+      display: none;
+    }
+
+
+    .js-cursor {
+      width: 26px;
+      height: 26px;
+
+      border: 1px solid #79aaff;
+
+      border-radius: 50%;
+
+      transform: translate(-50%, -50%);
+
+      transition:
+        width .25s ease,
+        height .25s ease,
+        background .25s ease;
+    }
+
+
+    .js-cursor-dot {
+      width: 5px;
+      height: 5px;
+
+      border-radius: 50%;
+
+      background: white;
+
+      transform: translate(-50%, -50%);
+    }
+
+
+    .js-cursor.active {
+      width: 48px;
+      height: 48px;
+
+      background: rgba(77,141,255,.10);
+    }
+
+
+    @media (hover: hover) and (pointer: fine) {
+
+      .js-cursor,
+      .js-cursor-dot {
+        display: block;
+      }
+
+    }
+
+
+    @media (hover: none), (pointer: coarse) {
+
+      .js-cursor,
+      .js-cursor-dot {
+        display: none !important;
+      }
+
+      .js-back-top {
+        right: 15px;
+        bottom: 15px;
+
+        width: 44px;
+        height: 44px;
+      }
+
+      .js-scroll-progress {
+        height: 2px;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(effectStyles);
+
+
+  /* =========================================================
+     03. PAGE LOADER
+  ========================================================= */
+
+  const loader =
+    document.createElement("div");
+
+  loader.className =
+    "js-page-loader";
+
+  loader.innerHTML = `
+    <div class="js-loader-content">
+
+      <div class="js-loader-brand">
+        SAM. P TECK<span>.</span>
+      </div>
+
+      <div class="js-loader-line"></div>
+
+      <div class="js-loader-text">
+        TECHNOLOGY · BUSINESS · EDUCATION
+      </div>
+
+    </div>
+  `;
+
+  body.prepend(loader);
+
+
+  window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+      loader.classList.add("hide");
+
+    }, 400);
+
+  });
+
+
+  /* =========================================================
+     04. SCROLL PROGRESS
+  ========================================================= */
+
+  const progress =
+    document.createElement("div");
+
+  progress.className =
+    "js-scroll-progress";
+
+  body.appendChild(progress);
+
+
+  const updateProgress = () => {
+
+    const scrollTop =
+      window.scrollY;
+
+    const totalHeight =
+      document.documentElement.scrollHeight -
+      window.innerHeight;
+
+
+    if (totalHeight <= 0) {
+
+      progress.style.width = "0%";
+
+      return;
+
+    }
+
+
+    const percentage =
+      (scrollTop / totalHeight) * 100;
+
+
+    progress.style.width =
+      `${Math.min(percentage, 100)}%`;
+
+  };
+
+
+  window.addEventListener(
+    "scroll",
+    updateProgress,
+    { passive: true }
+  );
+
+
+  updateProgress();
+
+
+  /* =========================================================
+     05. DYNAMIC HEADER
+  ========================================================= */
+
+  const updateHeader = () => {
+
+    if (!header) {
+      return;
+    }
+
+
+    if (window.scrollY > 50) {
+
+      header.classList.add(
+        "js-scrolled"
+      );
+
+    } else {
+
+      header.classList.remove(
+        "js-scrolled"
+      );
+
+    }
+
+  };
+
+
+  window.addEventListener(
+    "scroll",
+    updateHeader,
+    { passive: true }
+  );
+
+
+  updateHeader();
+
+
+  /* =========================================================
+     06. SCROLL REVEAL
+     
+     IMPORTANT:
+     We do NOT use opacity: 0 in CSS.
+     
+     The elements remain visible even if JavaScript
+     fails. JavaScript simply animates them when they
+     enter the screen.
+  ========================================================= */
+
+  const reveal = (element) => {
+
+    if (
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
+    ) {
+
+      return;
+
+    }
+
+
+    element.animate(
+      [
+        {
+          opacity: 0,
+          transform: "translateY(35px)"
+        },
+
+        {
+          opacity: 1,
+          transform: "translateY(0)"
+        }
+
+      ],
+      {
+        duration: 800,
+        easing: "cubic-bezier(.22,1,.36,1)",
+        fill: "both"
+      }
+    );
+
+  };
+
+
+  if ("IntersectionObserver" in window) {
+
+    const revealObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
+
+          entries.forEach((entry) => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+
+            reveal(entry.target);
+
+            observer.unobserve(
+              entry.target
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.08,
+          rootMargin: "0px 0px -50px 0px"
+        }
+      );
+
+
+    revealElements.forEach((element) => {
+
+      revealObserver.observe(element);
+
+    });
+
+  } else {
+
+    revealElements.forEach((element) => {
+
+      reveal(element);
+
+    });
+
+  }
+
+
+  /* =========================================================
+     07. ACTIVE NAVIGATION
+  ========================================================= */
+
+  if (
+    "IntersectionObserver" in window &&
+    sections.length
+  ) {
+
+    const navObserver =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach((entry) => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+
+            navigationLinks.forEach((link) => {
+
+              link.classList.remove(
+                "active"
+              );
+
+            });
+
+
+            const activeLink =
+              document.querySelector(
+                `.desktop-nav a[href="#${entry.target.id}"]`
+              );
+
+
+            if (activeLink) {
+
+              activeLink.classList.add(
+                "active"
+              );
+
+            }
+
+          });
+
+        },
+        {
+          rootMargin:
+            "-35% 0px -55% 0px"
+        }
+      );
+
+
+    sections.forEach((section) => {
+
+      navObserver.observe(section);
+
+    });
+
+  }
+
+
+  /* =========================================================
+     08. SMOOTH INTERNAL NAVIGATION
+  ========================================================= */
+
+  document
+    .querySelectorAll('a[href^="#"]')
+    .forEach((link) => {
+
+      link.addEventListener(
+        "click",
+        (event) => {
+
+          const targetId =
+            link.getAttribute("href");
+
+
+          if (
+            !targetId ||
+            targetId === "#"
+          ) {
+            return;
+          }
+
+
+          const target =
+            document.querySelector(
+              targetId
+            );
+
+
+          if (!target) {
+            return;
+          }
+
+
+          event.preventDefault();
+
+
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+
+          history.pushState(
+            null,
+            "",
+            targetId
+          );
+
+        }
+      );
+
+    });
+
+
+  /* =========================================================
+     09. COURSE CARDS
+  ========================================================= */
+
+  const courseCards =
+    document.querySelectorAll(
+      ".course-card"
+    );
+
+
+  courseCards.forEach((card) => {
+
+    card.addEventListener(
+      "mouseenter",
+      () => {
+
+        card.style.transform =
+          "translateY(-7px)";
+
+      }
+    );
+
+
+    card.addEventListener(
+      "mouseleave",
+      () => {
+
+        card.style.transform =
+          "translateY(0)";
+
+      }
+    );
+
+
+    /* Keyboard accessibility */
+
+    card.addEventListener(
+      "focusin",
+      () => {
+
+        card.style.transform =
+          "translateY(-5px)";
+
+      }
+    );
+
+
+    card.addEventListener(
+      "focusout",
+      () => {
+
+        card.style.transform =
+          "translateY(0)";
+
+      }
+    );
+
+  });
+
+
+  /* =========================================================
+     10. FEATURED DATA ANALYTICS COURSE
+     
+     Automatically detects your FreeCodeCamp course.
+  ========================================================= */
+
+  courseCards.forEach((card) => {
+
+    const freeCodeCampLink =
+      card.querySelector(
+        'a[href*="freecodecamp.org"]'
+      );
+
+
+    if (!freeCodeCampLink) {
+      return;
+    }
+
+
+    card.classList.add(
+      "js-featured-course"
+    );
+
+
+    if (
+      !card.querySelector(
+        ".js-featured-badge"
+      )
+    ) {
+
+      const badge =
+        document.createElement("span");
+
+      badge.className =
+        "js-featured-badge";
+
+      badge.textContent =
+        "FEATURED COURSE";
+
+      card.prepend(badge);
+
+    }
+
+
+    /* Button shine effect */
+
+    freeCodeCampLink.addEventListener(
+      "mouseenter",
+      () => {
+
+        freeCodeCampLink.style.transform =
+          "translateY(-3px)";
+
+      }
+    );
+
+
+    freeCodeCampLink.addEventListener(
+      "mouseleave",
+      () => {
+
+        freeCodeCampLink.style.transform =
+          "translateY(0)";
+
+      }
+    );
+
+  });
+
+
+  /* =========================================================
+     11. DISABLED COURSE LINKS
+  ========================================================= */
+
+  disabledLinks.forEach((element) => {
+
+    element.addEventListener(
+      "click",
+      (event) => {
+
+        event.preventDefault();
+
+      }
+    );
+
+  });
+
+
+  /* =========================================================
+     12. BACK TO TOP
+  ========================================================= */
+
+  const backTop =
+    document.createElement("button");
+
+  backTop.className =
+    "js-back-top";
+
+  backTop.type = "button";
+
+  backTop.setAttribute(
+    "aria-label",
+    "Back to top"
+  );
+
+  backTop.innerHTML = "↑";
+
+  body.appendChild(backTop);
+
+
+  const updateBackTop = () => {
+
+    if (window.scrollY > 600) {
+
+      backTop.classList.add("show");
+
+    } else {
+
+      backTop.classList.remove("show");
+
+    }
+
+  };
+
+
+  window.addEventListener(
+    "scroll",
+    updateBackTop,
+    { passive: true }
+  );
+
+
+  updateBackTop();
+
+
+  backTop.addEventListener(
+    "click",
+    () => {
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+
+  /* =========================================================
+     13. CUSTOM CURSOR
+  ========================================================= */
+
+  const desktopPointer =
+    window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    ).matches;
+
+
+  if (desktopPointer) {
+
+    const cursor =
+      document.createElement("div");
+
+    cursor.className =
+      "js-cursor";
+
+
+    const cursorDot =
+      document.createElement("div");
+
+    cursorDot.className =
+      "js-cursor-dot";
+
+
+    body.appendChild(cursor);
+
+    body.appendChild(cursorDot);
+
+
+    document.addEventListener(
+      "mousemove",
+      (event) => {
+
+        cursor.style.left =
+          `${event.clientX}px`;
+
+        cursor.style.top =
+          `${event.clientY}px`;
+
+
+        cursorDot.style.left =
+          `${event.clientX}px`;
+
+        cursorDot.style.top =
+          `${event.clientY}px`;
+
+      }
+    );
+
+
+    document
+      .querySelectorAll(
+        "a, button, .course-card, .image-frame"
+      )
+      .forEach((element) => {
+
+        element.addEventListener(
+          "mouseenter",
+          () => {
+
+            cursor.classList.add(
+              "active"
+            );
+
+          }
+        );
+
+
+        element.addEventListener(
+          "mouseleave",
+          () => {
+
+            cursor.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =========================================================
+     14. IMAGE PERFORMANCE
+  ========================================================= */
+
+  images.forEach((image) => {
+
+    image.decoding = "async";
+
+
+    if (
+      !image.hasAttribute("loading") &&
+      !image.closest(".hero-section")
+    ) {
+
+      image.loading = "lazy";
+
+    }
+
+  });
+
+
+  /* =========================================================
+     15. EXTERNAL LINK SECURITY
+  ========================================================= */
+
+  document
+    .querySelectorAll(
+      'a[target="_blank"]'
+    )
+    .forEach((link) => {
+
+      link.setAttribute(
+        "rel",
+        "noopener noreferrer"
+      );
+
+    });
+
+
+  /* =========================================================
+     16. CURRENT YEAR
+  ========================================================= */
+
+  const yearElement =
+    document.querySelector(
+      ".footer-bottom span"
+    );
+
+
+  if (yearElement) {
+
+    yearElement.textContent =
+      `© ${new Date().getFullYear()} Sam. P Teck. All rights reserved.`;
+
+  }
+
+
+  /* =========================================================
+     17. REDUCED MOTION
+  ========================================================= */
+
+  const reducedMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+
+  if (reducedMotion.matches) {
+
+    document.documentElement.style
+      .scrollBehavior = "auto";
+
+  }
+
+
+  /* =========================================================
+     18. KEYBOARD ACCESSIBILITY
+  ========================================================= */
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (event.key === "Escape") {
+
+        document
+          .querySelectorAll(
+            ".course-card"
+          )
+          .forEach((card) => {
+
+            card.style.transform =
+              "translateY(0)";
+
+          });
+
+      }
+
+    }
+  );
+
+
+  /* =========================================================
+     19. INITIALIZATION
+  ========================================================= */
+
+  body.classList.add(
+    "js-ready"
+  );
+
+
+  console.log(
+    "✓ Sam. P Teck portfolio loaded successfully."
+  );
+
+});
+</script>
 </body>
 </html>
-<s

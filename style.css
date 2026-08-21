@@ -1538,9 +1538,9 @@ body::before {
 .work-side,
 .course-card,
 .image-frame {
-  opacity: 1;
+  opacity: 0;
 
-  transform: translateY(0);
+  transform: translateY(35px);
 
   transition:
     opacity 0.8s ease,
@@ -1557,7 +1557,6 @@ body::before {
 
   transform: translateY(0);
 }
-
 
 /* =========================================================
    19. SELECTION
@@ -2306,6 +2305,432 @@ body::before {
     animation-iteration-count: 1 !important;
 
     transition-duration: 0.01ms !important;
+  }
+
+}
+
+/* =========================================================
+   25. SCROLL PROGRESS
+========================================================= */
+
+.scroll-progress {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 0;
+  height: 3px;
+
+  background: var(--blue);
+
+  z-index: 2000;
+
+  box-shadow:
+    0 0 12px rgba(77, 141, 255, 0.45);
+
+  transition: width 0.08s linear;
+}
+
+
+/* =========================================================
+   26. DYNAMIC HEADER
+========================================================= */
+
+.site-header {
+  transition:
+    background 0.4s ease,
+    box-shadow 0.4s ease,
+    height 0.4s ease;
+}
+
+
+.site-header.scrolled {
+  background: rgba(5, 15, 35, 0.94);
+
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================================
+   27. BACK TO TOP
+========================================================= */
+
+.back-to-top {
+  position: fixed;
+
+  right: 25px;
+  bottom: 25px;
+
+  width: 48px;
+  height: 48px;
+
+  border: 1px solid var(--line);
+
+  background: rgba(7, 21, 47, 0.9);
+
+  color: var(--white);
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  z-index: 900;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform: translateY(15px);
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+
+.back-to-top.visible {
+  opacity: 1;
+
+  visibility: visible;
+
+  transform: translateY(0);
+}
+
+
+.back-to-top:hover {
+  background: var(--blue);
+
+  border-color: var(--blue);
+
+  transform: translateY(-4px);
+}
+
+
+/* =========================================================
+   28. PAGE LOADER
+========================================================= */
+
+.page-loader {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 3000;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: var(--bg);
+
+  transition:
+    opacity 0.7s ease,
+    visibility 0.7s ease;
+}
+
+
+.loader-inner {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 18px;
+}
+
+
+.loader-brand {
+  font-family:
+    "Space Grotesk",
+    sans-serif;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  letter-spacing: -1px;
+}
+
+
+.loader-brand span {
+  color: var(--blue);
+}
+
+
+.loader-line {
+  width: 120px;
+
+  height: 1px;
+
+  background: var(--blue);
+
+  animation:
+    loaderLine 1.2s ease-in-out infinite;
+}
+
+
+.loader-text {
+  color: var(--muted);
+
+  font-size: 9px;
+
+  letter-spacing: 3px;
+}
+
+
+.loader-hidden {
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
+
+@keyframes loaderLine {
+
+  0% {
+    transform: scaleX(0.2);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleX(0.2);
+    opacity: 0.3;
+  }
+
+}
+
+
+/* =========================================================
+   29. COURSE ENHANCEMENT
+========================================================= */
+
+.course-card {
+  position: relative;
+}
+
+
+.course-card.course-hover {
+  border-color: rgba(77, 141, 255, 0.35);
+}
+
+
+.featured-course {
+  border-top: 2px solid var(--blue);
+}
+
+
+.featured-course-badge {
+  display: inline-block;
+
+  width: fit-content;
+
+  margin-bottom: 5px;
+
+  padding: 6px 9px;
+
+  background: rgba(77, 141, 255, 0.12);
+
+  border: 1px solid rgba(77, 141, 255, 0.3);
+
+  color: var(--blue-light);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+.featured-course .course-link.active {
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+.featured-course .course-link.active::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 100%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.25),
+      transparent
+    );
+
+  transition: left 0.6s ease;
+}
+
+
+.featured-course:hover
+.course-link.active::after {
+  left: 100%;
+}
+
+
+/* =========================================================
+   30. CUSTOM CURSOR
+========================================================= */
+
+.custom-cursor {
+  position: fixed;
+
+  top: -14px;
+  left: -14px;
+
+  width: 28px;
+  height: 28px;
+
+  border: 1px solid var(--blue);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 5000;
+
+  transition:
+    width 0.25s ease,
+    height 0.25s ease,
+    margin 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+
+  mix-blend-mode: difference;
+}
+
+
+.custom-cursor-dot {
+  position: fixed;
+
+  top: -3px;
+  left: -3px;
+
+  width: 6px;
+  height: 6px;
+
+  background: var(--white);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 5001;
+
+  mix-blend-mode: difference;
+}
+
+
+.custom-cursor.cursor-hover {
+  width: 50px;
+
+  height: 50px;
+
+  margin-left: -11px;
+
+  margin-top: -11px;
+
+  background: rgba(77, 141, 255, 0.12);
+
+  border-color: var(--blue-light);
+}
+
+
+/* =========================================================
+   31. IMAGE PERFORMANCE
+========================================================= */
+
+.image-frame img {
+  will-change: transform;
+
+  backface-visibility: hidden;
+
+  -webkit-backface-visibility: hidden;
+}
+
+
+/* =========================================================
+   32. MOBILE PROTECTION
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .scroll-progress {
+    height: 2px;
+  }
+
+
+  .back-to-top {
+    right: 15px;
+
+    bottom: 15px;
+
+    width: 44px;
+
+    height: 44px;
+  }
+
+
+  .featured-course-badge {
+    font-size: 8px;
+  }
+
+}
+
+
+/* =========================================================
+   33. DISABLE CUSTOM CURSOR ON TOUCH DEVICES
+========================================================= */
+
+@media (hover: none), (pointer: coarse) {
+
+  .custom-cursor,
+  .custom-cursor-dot {
+    display: none !important;
+  }
+
+}
+
+
+/* =========================================================
+   34. REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .page-loader,
+  .loader-line,
+  .scroll-progress,
+  .back-to-top,
+  .custom-cursor,
+  .custom-cursor-dot {
+    transition: none !important;
+
+    animation: none !important;
   }
 
 }

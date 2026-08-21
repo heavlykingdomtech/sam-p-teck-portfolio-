@@ -1538,9 +1538,9 @@ body::before {
 .work-side,
 .course-card,
 .image-frame {
-  opacity: 0;
+  opacity: 1;
 
-  transform: translateY(35px);
+  transform: translateY(0);
 
   transition:
     opacity 0.8s ease,

@@ -2026,56 +2026,39 @@ body::before {
 
 
 /* =========================================================
-   22. SCROLL REVEAL
+   18. SCROLL REVEAL — SAFE VERSION
 ========================================================= */
+
+/*
+   IMPORTANT:
+   Elements remain visible even if JavaScript fails.
+   JavaScript can still add the is-visible class for
+   smooth animation when it is working.
+*/
 
 .service-item,
 .work-feature,
 .work-side,
 .course-card,
 .image-frame {
-
-  opacity: 0;
-
-  transform: translateY(35px);
+  opacity: 1;
+  transform: translateY(0);
 
   transition:
     opacity 0.8s ease,
     transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-
 }
 
+
+/* JavaScript animation state */
 
 .service-item.is-visible,
 .work-feature.is-visible,
 .work-side.is-visible,
 .course-card.is-visible,
 .image-frame.is-visible {
-
   opacity: 1;
-
   transform: translateY(0);
-
-}
-
-
-/*
-   IMPORTANT FALLBACK
-
-   If JavaScript is disabled or fails,
-   the page must still remain visible.
-*/
-
-.no-js .service-item,
-.no-js .work-feature,
-.no-js .work-side,
-.no-js .course-card,
-.no-js .image-frame {
-
-  opacity: 1;
-
-  transform: none;
-
 }
 
 
